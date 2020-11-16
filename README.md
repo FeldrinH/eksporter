@@ -1,40 +1,20 @@
-Below are the steps to get your plugin running. You can also find instructions at:
+## Plugina paigaldamine
 
-  https://www.figma.com/plugin-docs/setup/
+Lae plugina failid alla (https://github.com/FeldrinH/eksporter/archive/master.zip või `git clone`) ja vajadusel paki lahti, soovitatavalt kuhugi eraldi kausta.
 
-This plugin template uses Typescript and NPM, two standard tools in creating JavaScript applications.
+Lae alla ja ava Figma Desktop (https://www.figma.com/downloads/).
 
-First, download Node.js which comes with NPM. This will allow you to install TypeScript and other
-libraries. You can find the download link here:
+Ava tasemete projekt.
 
-  https://nodejs.org/en/download/
+Paremklõpsuga avanevast menüüst ava Plugins -> Development -> New plugin...
 
-Next, install TypeScript using the command:
+Vajuta 'Click to choose a manifest.json file'
 
-  npm install -g typescript
+Avanenud aknas navigeeri kataloogi kus on eelnevalt alla laetud plugina failid ning vali sealt manifest.json
 
-Finally, in the directory of your plugin, get the latest type definitions for the plugin API by running:
 
-  npm install --save-dev @figma/plugin-typings
+## Plugina kasutamine
 
-If you are familiar with JavaScript, TypeScript will look very familiar. In fact, valid JavaScript code
-is already valid Typescript code.
+Figma Desktopis vali ekraanid mida eksportida ning jooksuta plugin paremklõpsumenüüst valikuga Plugins -> Development -> eksporter
 
-TypeScript adds type annotations to variables. This allows code editors such as Visual Studio Code
-to provide information about the Figma API while you are writing code, as well as help catch bugs
-you previously didn't notice.
-
-For more information, visit https://www.typescriptlang.org/
-
-Using TypeScript requires a compiler to convert TypeScript (code.ts) into JavaScript (code.js)
-for the browser to run.
-
-We recommend writing TypeScript code using Visual Studio code:
-
-1. Download Visual Studio Code if you haven't already: https://code.visualstudio.com/.
-2. Open this directory in Visual Studio Code.
-3. Compile TypeScript to JavaScript: Run the "Terminal > Run Build Task..." menu item,
-    then select "tsc: watch - tsconfig.json". You will have to do this again every time
-    you reopen Visual Studio Code.
-
-That's it! Visual Studio Code will regenerate the JavaScript file every time you save.
+Eksporditud tekst kirjutatakse debug konsooli ning selle saab sealt kopeerida (avatav Ctrl+Alt+I või ⌥⌘I või Plugins -> Development -> Console)
