@@ -37,6 +37,6 @@ ekraanid.forEach(ekraan => {
     out.push(`${roomId}:[${platvormid.map(p => `Põrand(${p.xMin},${p.xMax},${p.yMin},${p.yMax})`).join(",")}]`)
 })
 
-console.log(out.join(",\n"))
+console.log(out.join(",\n") + "\n")
 
 figma.closePlugin();
