@@ -23,9 +23,8 @@ ekraanid.forEach(ekraan => {
     const platvormid = [] as Ristkülik[]
 
     const asjad = ekraan.findAll(s => s.type == "RECTANGLE") as RectangleNode[]
-    asjad.filter(a => a.strokeStyleId == platvormStyleId || a.fillStyleId == platvormStyleId).forEach(p => {      
+    asjad.filter(a => a.strokeStyleId == platvormStyleId || a.fillStyleId == platvormStyleId).forEach(p => {
         const t = p.relativeTransform
-        //console.log(t)
         const points = [transform(0, 0, t), transform(p.width, 0, t), transform(0, p.height, t), transform(p.width, p.height, t)]
         const pointsX = points.map(p => p.x)
         const pointsY = points.map(p => p.y)
@@ -33,10 +32,11 @@ ekraanid.forEach(ekraan => {
         platvormid.push(eksport)
     })
 
-    out.push(ekraan.name)
-    out.push("[" + platvormid.map(p => `Põrand(${p.xMin},${p.xMax},${p.yMin},${p.yMax})`).join(",") + "]")
+    const roomId = ekraan.name.match(/\[([-]?[0-9]+)\]/)[1]
+    console.log(`'${ekraan.name}' ${roomId}`)
+    out.push(`${roomId}:[${platvormid.map(p => `Põrand(${p.xMin},${p.xMax},${p.yMin},${p.yMax})`).join(",")}]`)
 })
 
-console.log(out.join("\n"))
+console.log(out.join(",\n"))
 
 figma.closePlugin();
