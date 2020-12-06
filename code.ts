@@ -31,12 +31,13 @@ ekraanid.forEach(ekraan => {
     })
     asjad.filter(a => a.strokeStyleId == trapdoorStyleId || a.fillStyleId == trapdoorStyleId).forEach(p => {
         const bbox = getBoundingBox(p)
-        platvormid.push(`Trapdoor(${bbox.xMin},${bbox.xMax},${bbox.yMin},${bbox.yMax})`)
+        const args = p.name.match(/\[([^\]]+)\]/)[1]
+        platvormid.push(`Trapdoor(${bbox.xMin},${bbox.xMax},${bbox.yMin},${bbox.yMax},${args})`)
     })
 
     const roomId = ekraan.name.match(/\[([-]?[0-9]+)\]/)[1]
     console.log(`'${ekraan.name}' ${roomId}`)
-    out.push(`${roomId}:[${platvormid.map(p => `Põrand(${p.xMin},${p.xMax},${p.yMin},${p.yMax})`).join(",")}]`)
+    out.push(`${roomId}:[${platvormid.join(",")}]`)
 })
 
 console.log(out.join("\n"))
