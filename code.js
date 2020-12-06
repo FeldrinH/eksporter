@@ -19,11 +19,11 @@ const out = [];
 ekraanid.forEach(ekraan => {
     const platvormid = [];
     const asjad = ekraan.findAll(s => s.type == "RECTANGLE");
-    asjad.filter(a => a.strokeStyleId == platvormStyleId || a.fillStyleId == platvormStyleId).forEach(p => {
+    asjad.filter(a => a.strokeStyleId == platvormStyleId && a.visible).forEach(p => {
         const bbox = getBoundingBox(p);
         platvormid.push(`Põrand(${bbox.xMin},${bbox.xMax},${bbox.yMin},${bbox.yMax})`);
     });
-    asjad.filter(a => a.strokeStyleId == trapdoorStyleId || a.fillStyleId == trapdoorStyleId).forEach(p => {
+    asjad.filter(a => a.strokeStyleId == trapdoorStyleId && a.visible).forEach(p => {
         const bbox = getBoundingBox(p);
         const args = p.name.match(/\[([^\]]+)\]/)[1];
         platvormid.push(`Trapdoor(${bbox.xMin},${bbox.xMax},${bbox.yMin},${bbox.yMax},${args})`);
