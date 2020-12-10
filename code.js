@@ -43,7 +43,7 @@ ekraanid.forEach(([ekraan, roomId]) => {
     console.log(`'${ekraan.name}' ${roomId}`);
     outPlatforms.push(`${roomId}:[${platvormid.join(",")}]`);
 });
-console.log(outPlatforms.join("\n") + "\n");
+console.log(outPlatforms.join(",\n") + "\n");
 const outEnemies = [];
 ekraanid.forEach(([ekraan, roomId]) => {
     const vastased = [];
@@ -54,5 +54,5 @@ ekraanid.forEach(([ekraan, roomId]) => {
     });
     outEnemies.push(`${roomId}:[${vastased.join(",")}]`);
 });
-console.log(outEnemies.join("\n") + "\n");
+console.log(outEnemies.join(",\n") + "\n");
 figma.closePlugin();
