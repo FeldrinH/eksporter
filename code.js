@@ -11,12 +11,24 @@ function getBoundingBox(p) {
     const pointsY = points.map(p => p.y);
     return { xMin: Math.round(Math.min(...pointsX)), yMin: Math.round(Math.min(...pointsY)), xMax: Math.round(Math.max(...pointsX)), yMax: Math.round(Math.max(...pointsY)) };
 }
-const platvormStyleId = figma.getLocalPaintStyles().find(s => s.name == "platvorm").id;
-const trapdoorStyleId = figma.getLocalPaintStyles().find(s => s.name == "trapdoor").id;
+function getStyleId(name) {
+    return figma.getLocalPaintStyles().find(s => s.name == name).id;
+}
+const platvormStyleId = getStyleId("platvorm");
+const trapdoorStyleId = getStyleId("trapdoor");
+const enemyStyles = new Map([
+    [getStyleId("Lind"), "Lind"],
+    [getStyleId("Zombie"), "Zombie"],
+    [getStyleId("Jälitaja"), "Jälitaja"],
+    [getStyleId("Preester"), "Preester"],
+    [getStyleId("Vampiir"), "Vampiir"],
+]);
 //console.assert(figma.currentPage.selection.length === 1 && figma.currentPage.selection[0].type === "FRAME", "Please select at least one frame")
-const ekraanid = figma.currentPage.selection.filter(s => s.type === "FRAME");
-const out = [];
-ekraanid.forEach(ekraan => {
+const ekraanid = figma.currentPage.selection.filter(s => s.type === "FRAME")
+    .map(s => [s, parseInt(s.name.match(/\[([-]?[0-9]+)\]/)[1])])
+    .sort((a, b) => a[1] - b[1]);
+const outPlatforms = [];
+ekraanid.forEach(([ekraan, roomId]) => {
     const platvormid = [];
     const asjad = ekraan.findAll(s => s.type == "RECTANGLE");
     asjad.filter(a => a.strokeStyleId == platvormStyleId && a.visible).forEach(p => {
@@ -28,9 +40,19 @@ ekraanid.forEach(ekraan => {
         const args = p.name.match(/\[([^\]]+)\]/)[1];
         platvormid.push(`Trapdoor(${bbox.xMin},${bbox.xMax},${bbox.yMin},${bbox.yMax},${args})`);
     });
-    const roomId = ekraan.name.match(/\[([-]?[0-9]+)\]/)[1];
     console.log(`'${ekraan.name}' ${roomId}`);
-    out.push(`${roomId}:[${platvormid.join(",")}]`);
+    outPlatforms.push(`${roomId}:[${platvormid.join(",")}]`);
 });
-console.log(out.join("\n"));
+console.log(outPlatforms.join("\n") + "\n");
+const outEnemies = [];
+ekraanid.forEach(([ekraan, roomId]) => {
+    const vastased = [];
+    const asjad = ekraan.findAll(s => s.type == "RECTANGLE");
+    asjad.filter(a => enemyStyles.has(a.fillStyleId) && a.visible).forEach(p => {
+        const bbox = getBoundingBox(p);
+        vastased.push(`${enemyStyles.get(p.fillStyleId)}(${bbox.xMin},${bbox.yMax},${bbox.xMax - bbox.xMin},${bbox.yMax - bbox.yMin}, ???)`);
+    });
+    outEnemies.push(`${roomId}:[${vastased.join(",")}]`);
+});
+console.log(outEnemies.join("\n") + "\n");
 figma.closePlugin();
