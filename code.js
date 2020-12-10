@@ -50,7 +50,7 @@ ekraanid.forEach(([ekraan, roomId]) => {
     const asjad = ekraan.findAll(s => s.type == "RECTANGLE");
     asjad.filter(a => enemyStyles.has(a.fillStyleId) && a.visible).forEach(p => {
         const bbox = getBoundingBox(p);
-        vastased.push(`${enemyStyles.get(p.fillStyleId)}(${bbox.xMin},${bbox.yMax},${bbox.xMax - bbox.xMin},${bbox.yMax - bbox.yMin}, ???)`);
+        vastased.push(`${enemyStyles.get(p.fillStyleId)}(${bbox.xMin}, ${bbox.yMax}, ${bbox.xMax - bbox.xMin}, ${bbox.yMax - bbox.yMin}, ???)`);
     });
     outEnemies.push(`${roomId}:[${vastased.join(",")}]`);
 });

@@ -63,7 +63,7 @@ ekraanid.forEach(([ekraan, roomId]) => {
     const asjad = ekraan.findAll(s => s.type == "RECTANGLE") as RectangleNode[]
     asjad.filter(a => enemyStyles.has(a.fillStyleId as string) && a.visible).forEach(p => {
         const bbox = getBoundingBox(p)
-        vastased.push(`${enemyStyles.get(p.fillStyleId as string)}(${bbox.xMin},${bbox.yMax},${bbox.xMax-bbox.xMin},${bbox.yMax-bbox.yMin}, ???)`)
+        vastased.push(`${enemyStyles.get(p.fillStyleId as string)}(${bbox.xMin}, ${bbox.yMax}, ${bbox.xMax-bbox.xMin}, ${bbox.yMax-bbox.yMin}, ???)`)
     })
 
     outEnemies.push(`${roomId}:[${vastased.join(",")}]`)
